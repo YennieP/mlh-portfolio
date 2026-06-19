@@ -104,3 +104,10 @@ body {
 .about h2, .work-experience h2, .education h2, .hobbies h2, .map h2 {
     color: #1C539F; 
 }
+
+.menu-bar {
+    padding: 5px 60px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
