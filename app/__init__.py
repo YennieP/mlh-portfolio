@@ -8,4 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html', title="MLH Fellow", url=os.getenv("URL"))
+    return render_template('index.html', 
+                           title1="Jane Choi", 
+                           title2="Yanxi Pan", 
+                           url=os.getenv("URL"))
