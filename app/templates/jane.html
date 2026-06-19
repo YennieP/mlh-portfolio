@@ -78,6 +78,7 @@
         {% for education in educations %}
         <div class="education-item">
             <h3>{{ education.school }}</h3>
+            <img src="{{ url_for('static', filename='img/uw_logo.png') }}" alt="University of Washington Logo">
             <p>{{ education.degree }} | {{ education.duration }}</p>
         </div>
         {% endfor %}
@@ -86,7 +87,7 @@
     <!-- Map -->
     <section class="map">
         <h2>Places I've Visited</h2>
-        <p>Korea, California, West Virginia, Washington D.C., Las Vegas</p>
+        <img src="{{ url_for('static', filename='img/jane_visited.jpg') }}" alt="Map of Places Visited">
     </section>
 </body>
 </html>
