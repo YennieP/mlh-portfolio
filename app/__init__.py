@@ -41,6 +41,10 @@ def jane():
                            educations=education, 
                            hobbies=hobbies)
 
+@app.route('/jane/hobbies')
+def jahabe_hobbies(): 
+    return render_template('jahabe_hobbies.html', url=os.getenv("URL"))
+
 @app.route('/yanxi')
 def yanxi(): 
     return render_template('yanxi.html', url=os.getenv("URL"))
