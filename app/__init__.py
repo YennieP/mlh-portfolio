@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -74,4 +74,18 @@ def yanxi():
     return render_template('yanxi.html',
                            url=os.getenv("URL"),
                            work_experiences=experiences,
-                           educations=education)
+                           educations=education,
+                           pages=yanxi_pages())
+
+# Menu shown on Yanxi's pages — add an entry here and the menu updates everywhere.
+def yanxi_pages():
+    return [
+        {"name": "About Me", "url": url_for('yanxi')},
+        {"name": "Hobbies", "url": url_for('yanxi_hobbies')},
+    ]
+
+@app.route('/yanxi/hobbies')
+def yanxi_hobbies():
+    return render_template('yanxi_hobbies.html',
+                           url=os.getenv("URL"),
+                           pages=yanxi_pages())

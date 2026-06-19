@@ -16,7 +16,7 @@
 
     <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
     <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
-    <title>Yanxi Pan</title>
+    <title>Yanxi Pan — Hobbies</title>
 </head>
 
 <body>
@@ -45,41 +45,11 @@
         {% endfor %}
     </nav>
 
-    <!-- About -->
-    <section class="about">
-        <h2>About Me</h2>
-        <p>Hi, I'm Yanxi Pan, a CS graduate student at Northeastern University
-            (Silicon Valley) and an MLH Fellow. I build AI-powered tools that bridge
-            language models and real user needs, with a focus on full-stack development,
-            NLP pipelines, and turning research prototypes into polished products.</p>
-    </section>
-
-    <!-- Work Experience -->
-    <section class="work-experience">
-        <h2>Work Experience</h2>
-        {% for experience in work_experiences %}
-        <div class="experience">
-            <h3>{{ experience.company }}</h3>
-            <p>{{ experience.role }}</p>
-            <p>{{ experience.duration }}</p>
-            <ul>
-                {% for point in experience.description %}
-                    <li>{{ point }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endfor %}
-    </section>
-
-    <!-- Education -->
-    <section class="education">
-        <h2>Education</h2>
-        {% for education in educations %}
-        <div class="education-item">
-            <h3>{{ education.school }}</h3>
-            <p>{{ education.degree }} | {{ education.duration }}</p>
-        </div>
-        {% endfor %}
+    <!-- Hobbies -->
+    <section class="hobbies" id="hobbies">
+        <h2>Hobbies</h2>
+        <p>Coming soon — I'll add my hobbies and photos here.</p>
+        <!-- TODO (#4): 填充兴趣内容 + 图片 -->
     </section>
 </body>
 
