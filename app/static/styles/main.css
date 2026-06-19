@@ -139,3 +139,7 @@ body {
     font-weight: 700;
     border-bottom-color: #1C539F;
 }
+
+.hobby img {
+    height: 200px;
+}
