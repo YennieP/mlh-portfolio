@@ -5,3 +5,9 @@ __pycache__
 python3-virtualenv
 flask.sqlite
 .DS_Store
+
+# Local-only planning doc (do not upload)
+PLAN.md
+
+# Local-only reference (previous personal site, do not upload)
+Yanxi-Template.html
