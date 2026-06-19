@@ -95,3 +95,12 @@ body {
     font-size: 50px;
     font-weight: 700;
 }
+
+.about, .work-experience, .education, .hobbies, .map {
+    padding: 10px 60px;
+    max-width: 800px;
+}
+
+.about h2, .work-experience h2, .education h2, .hobbies h2, .map h2 {
+    color: #1C539F; 
+}

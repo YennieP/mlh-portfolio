@@ -41,36 +41,41 @@
     <!-- About -->
     <section class="about">
         <h2>About Me</h2>
-        <p>Hi, I'm Jane Choi! I'm a computer science student at the University of Washington. </p>
+        <p>Hello, my name is Jane Choi. I am currently pursuing a bachelor’s degree in 
+            Computer Science and Software Engineering at the University of Washington. 
+            I enjoy collaborating to build software and seeing products used by real users. 
+            I am driven to learn, combine skills, and collaborate with others. 
+            I look forward to bringing my skills and experiences to future opportunities 
+            and contributing positively to the teams I work with.</p>
+        <img src="{{ url_for('static', filename='img/sunset_square.jpg') }}" alt="Jane Choi">
     </section>
 
     <!-- Work Experience -->
     <section class="work-experience">
         <h2>Work Experience</h2>
+        {% for experience in work_experiences %}
         <div class ="experience">
-            <h3>Company Name</h3>
-            <p>Position | Duration</p>
-            <p>Description</p>
+            <h3>{{ experience.company }}</h3>
+            <p>{{ experience.role }} </p>
+            <p> {{ experience.duration }} </p>
+            <ul>
+                {% for point in experience.description %}
+                    <li>{{ point }}</li>
+                {% endfor %}
+            </ul>
         </div>
+        {% endfor %}
     </section>
 
     <!-- Education -->
     <section class="education">
         <h2>Education</h2>
+        {% for education in educations %}
         <div class="education-item">
-            <h3>University of Washington</h3>
-            <p>Bachelor of Science in Computer Science | Expected Graduation: 2027</p>
+            <h3>{{ education.school }}</h3>
+            <p>{{ education.degree }} | {{ education.duration }}</p>
         </div>
-    </section>
-
-    <!-- Hobbies -->
-    <section class="hobbies">
-        <h2>Hobbies</h2>
-        <div class="hobby-item">
-            <h3>Hobby 1</h3>
-            // add image here
-            <p>Description</p>
-        </div>
+        {% endfor %}
     </section>
 
     <!-- Map -->
