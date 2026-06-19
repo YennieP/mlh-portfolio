@@ -111,3 +111,7 @@ body {
     justify-content: center;
     gap: 50px;
 }
+
+.hobby img {
+    height: 200px;
+}

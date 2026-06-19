@@ -43,7 +43,13 @@ def jane():
 
 @app.route('/jane/hobbies')
 def jahabe_hobbies(): 
-    return render_template('jahabe_hobbies.html', url=os.getenv("URL"))
+    hobbies = [
+        {"name": "Watching Movies in a theater", "image": "img/jane_hobby1.jpg"},
+        {"name": "Traveling & Outdoor Activities", "image": "img/jane_hobby2.jpg"},
+    ]
+    return render_template('jahabe_hobbies.html', 
+                           url=os.getenv("URL"), 
+                           hobbies=hobbies)
 
 @app.route('/yanxi')
 def yanxi():
