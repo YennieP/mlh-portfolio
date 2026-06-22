@@ -1,4 +1,5 @@
 import os
+import textwrap
 from flask import Flask, render_template, request, url_for
 from dotenv import load_dotenv
 
@@ -92,6 +93,67 @@ def yanxi_pages():
 
 @app.route('/yanxi/hobbies')
 def yanxi_hobbies():
+    # Each hobby uses a little ASCII-art "icon" instead of a photo (pure ASCII so it
+    # stays aligned in a monospace font). Edit the lines below to tweak the art.
+    hobbies = [
+        {"name": "Listening to Music", "description": "I enjoy listening to lyrical, pop, rock, alternative, ballad, and K-pop music.", "icon": "\n".join([
+            "     _____",
+            "    /     \\",
+            "   |       |",
+            "  _|       |_",
+            " | |       | |",
+            " | |       | |",
+            " |_|       |_|",
+        ])},
+        {"name": "Singing", "description": "I love singing along while music plays - alone in my room, swaying and singing my heart out to the beat.", "icon": "\n".join([
+            "    ___",
+            "   /   \\",
+            "  | ::: |  )))",
+            "  | ::: |  )))",
+            "   \\___/",
+            "    | |",
+            "   /   \\",
+            "  /_____\\",
+        ])},
+        {"name": "Playing The Sims 4", "description": "I love using The Sims 4 to simulate the lives of people I care about - watching them live the way I'd want, or achieve things I couldn't, makes me genuinely happy.", "icon": "\n".join([
+            "      /\\",
+            "     /  \\",
+            "    /----\\",
+            "    \\----/",
+            "     \\  /",
+            "      \\/",
+        ])},
+        {"name": "Writing", "description": "I enjoy writing fan fiction - using words to share my thoughts and send my blessings to the characters I love, while imagining the stories they might live out across different worlds and timelines.", "icon": "\n".join([
+            "    _________",
+            "   |         |",
+            "   | ------- |",
+            "   | ------- |",
+            "   | ------- |",
+            "   | ------- |",
+            "   |_________|",
+        ])},
+        {"name": "Drawing", "description": "I'm working hard on learning to draw. Since it's a completely different form of expression from writing, I hope to express my feelings and emotions from new angles and in new ways.", "icon": "\n".join([
+            "    _________",
+            "   | o       |",
+            "   |    /\\   |",
+            "   |   /  \\  |",
+            "   |  /    \\ |",
+            "   |_________|",
+            "     |     |",
+        ])},
+        {"name": "Badminton", "description": "A sport that keeps me fit and healthy.", "icon": "\n".join([
+            "    \\ | /",
+            "    \\\\|//",
+            "     \\|/",
+            "    (===)",
+            "     |_|",
+        ])},
+    ]
+    # Strip the common left indent from each icon so they center evenly in their column.
+    for hobby in hobbies:
+        hobby["icon"] = textwrap.dedent(hobby["icon"])
+
     return render_template('yanxi_hobbies.html',
                            url=os.getenv("URL"),
-                           pages=yanxi_pages())
+                           pages=yanxi_pages(),
+                           hobbies=hobbies)

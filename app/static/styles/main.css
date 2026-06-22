@@ -144,6 +144,60 @@ body {
     height: 200px;
 }
 
+/* Yanxi hobby row — text on the left, ASCII-art icon on the right. */
+.yanxi-hobby {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    max-width: 680px;
+    margin: 0 auto 26px;
+    padding: 0 24px;
+}
+
+.yanxi-hobby .hobby-text {
+    flex: 1;
+}
+
+.yanxi-hobby .hobby-text h3 {
+    margin-bottom: 6px;
+}
+
+/* Fixed-width column so every icon sits in the same horizontal slot and forms a
+   tidy vertical column; the icon itself is centered within the slot. */
+.hobby-icon-wrap {
+    flex-shrink: 0;
+    width: 130px;
+    display: flex;
+    justify-content: center;
+}
+
+/* ASCII-art hobby icon (Yanxi) — monospace keeps the art aligned; clamp scales it
+   with the viewport; pre + overflow-x avoids wrapping/breaking when zoomed or on mobile. */
+.hobby-icon {
+    font-family: "Courier New", Consolas, monospace;
+    white-space: pre;
+    line-height: 1.15;
+    font-size: clamp(11px, 2.4vw, 16px);
+    color: #1C539F;
+    margin: 0;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+/* On narrow screens, stack the icon under the text so nothing overflows. */
+@media (max-width: 600px) {
+    .yanxi-hobby {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .hobby-icon-wrap {
+        width: auto;
+        justify-content: flex-start;
+    }
+}
+
 .map img {
     height: 300px;
 }
