@@ -199,6 +199,14 @@ body {
     height: 300px;
 }
 
+/* Leaflet interactive map (Yanxi) — needs an explicit height to render. */
+.visited-map {
+    height: 420px;
+    max-width: 820px;
+    margin: 0 auto 40px;
+    border-radius: 10px;
+}
+
 .education img {
     height: 100px;
 }

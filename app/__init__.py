@@ -88,6 +88,7 @@ def yanxi_pages():
     return [
         {"name": "About Me", "url": url_for('yanxi')},
         {"name": "Hobbies", "url": url_for('yanxi_hobbies')},
+        {"name": "Places", "url": url_for('yanxi_places')},
     ]
 
 @app.route('/yanxi/hobbies')
@@ -105,3 +106,20 @@ def yanxi_hobbies():
                            url=os.getenv("URL"),
                            pages=yanxi_pages(),
                            hobbies=hobbies)
+
+@app.route('/yanxi/places')
+def yanxi_places():
+    # Countries/cities I've visited — shown as markers on the Leaflet map.
+    visited = [
+        {"name": "Russia", "lat": 55.7558, "lng": 37.6173},
+        {"name": "Japan", "lat": 35.6762, "lng": 139.6503},
+        {"name": "Thailand", "lat": 13.7563, "lng": 100.5018},
+        {"name": "United States", "lat": 38.9072, "lng": -77.0369},
+        {"name": "China", "lat": 39.9042, "lng": 116.4074},
+        {"name": "Hungary (Budapest)", "lat": 47.4979, "lng": 19.0402},
+        {"name": "Germany", "lat": 52.5200, "lng": 13.4050},
+    ]
+    return render_template('yanxi_places.html',
+                           url=os.getenv("URL"),
+                           pages=yanxi_pages(),
+                           visited=visited)
