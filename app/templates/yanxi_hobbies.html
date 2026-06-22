@@ -48,8 +48,21 @@
     <!-- Hobbies -->
     <section class="hobbies" id="hobbies">
         <h2>Hobbies</h2>
-        <p>Coming soon — I'll add my hobbies and photos here.</p>
-        <!-- TODO (#4): 填充兴趣内容 + 图片 -->
+        {% for hobby in hobbies %}
+        <div class="hobby yanxi-hobby">
+            <div class="hobby-text">
+                <h3>{{ hobby.name }}</h3>
+                {% if hobby.description %}
+                <p>{{ hobby.description }}</p>
+                {% endif %}
+            </div>
+            {% if hobby.image %}
+            <div class="hobby-icon-wrap">
+                <img class="hobby-photo" src="{{ url_for('static', filename=hobby.image) }}" alt="{{ hobby.name }}">
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
     </section>
 </body>
 

@@ -92,6 +92,16 @@ def yanxi_pages():
 
 @app.route('/yanxi/hobbies')
 def yanxi_hobbies():
+    hobbies = [
+        {"name": "Listening to Music", "description": "I enjoy listening to lyrical, pop, rock, alternative, ballad, and K-pop music.", "image": "img/Yanxi_listening_to_music.jpg"},
+        {"name": "Singing", "description": "I love singing along while music plays - alone in my room, swaying and singing my heart out to the beat.", "image": "img/Yanxi_singing.jpg"},
+        {"name": "Playing The Sims 4", "description": "I love using The Sims 4 to simulate the lives of people I care about - watching them live the way I'd want, or achieve things I couldn't, makes me genuinely happy.", "image": "img/Yanxi_Sims4.jpg"},
+        {"name": "Writing", "description": "I enjoy writing fan fiction - using words to share my thoughts and send my blessings to the characters I love, while imagining the stories they might live out across different worlds and timelines.", "image": "img/Yanxi_writing.jpg"},
+        {"name": "Drawing", "description": "I'm working hard on learning to draw. Since it's a completely different form of expression from writing, I hope to express my feelings and emotions from new angles and in new ways.", "image": "img/Yanxi_drawing.jpg"},
+        {"name": "Badminton", "description": "A sport that keeps me fit and healthy.", "image": "img/Yanxi_badminton.jpg"},
+    ]
+
     return render_template('yanxi_hobbies.html',
                            url=os.getenv("URL"),
-                           pages=yanxi_pages())
+                           pages=yanxi_pages(),
+                           hobbies=hobbies)
