@@ -163,29 +163,26 @@ body {
     margin-bottom: 6px;
 }
 
-/* Fixed-width column so every icon sits in the same horizontal slot and forms a
-   tidy vertical column; the icon itself is centered within the slot. */
+/* Fixed-width column so every photo sits in the same horizontal slot and forms a
+   tidy vertical column; the photo is centered within the slot. */
 .hobby-icon-wrap {
     flex-shrink: 0;
-    width: 130px;
+    width: 150px;
     display: flex;
     justify-content: center;
 }
 
-/* ASCII-art hobby icon (Yanxi) — monospace keeps the art aligned; clamp scales it
-   with the viewport; pre + overflow-x avoids wrapping/breaking when zoomed or on mobile. */
-.hobby-icon {
-    font-family: "Courier New", Consolas, monospace;
-    white-space: pre;
-    line-height: 1.15;
-    font-size: clamp(11px, 2.4vw, 16px);
-    color: #1C539F;
-    margin: 0;
-    overflow-x: auto;
-    max-width: 100%;
+/* Uniform square thumbnails so different photo sizes still line up neatly.
+   (Higher specificity than the shared ".hobby img" rule so it isn't overridden.) */
+.yanxi-hobby .hobby-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
 }
 
-/* On narrow screens, stack the icon under the text so nothing overflows. */
+/* On narrow screens, stack the photo under the text so nothing overflows. */
 @media (max-width: 600px) {
     .yanxi-hobby {
         flex-direction: column;

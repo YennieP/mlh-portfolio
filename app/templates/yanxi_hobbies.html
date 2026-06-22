@@ -56,9 +56,9 @@
                 <p>{{ hobby.description }}</p>
                 {% endif %}
             </div>
-            {% if hobby.icon %}
+            {% if hobby.image %}
             <div class="hobby-icon-wrap">
-                <pre class="hobby-icon" aria-hidden="true">{{ hobby.icon }}</pre>
+                <img class="hobby-photo" src="{{ url_for('static', filename=hobby.image) }}" alt="{{ hobby.name }}">
             </div>
             {% endif %}
         </div>
