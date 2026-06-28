@@ -73,8 +73,7 @@ def yanxi():
     ]
     education = [
         {"school": "Northeastern University - Silicon Valley", "degree": "Master of Science in Computer Science", "duration": "Expected Graduation: TBD"},
-        # TODO: 补上你的本科 / 之前的学历（学校、学位、专业、时间）
-        {"school": "Undergraduate University", "degree": "Bachelor's Degree, Major", "duration": "Year - Year"},
+        {"school": "Beijing Normal University - HKBU United International College (UIC)", "degree": "B.S. in Computer Science and Technology | Dean's List (Top Students Award)", "duration": "Sep 2021 - Jun 2025"},
     ]
 
     return render_template('yanxi.html',
