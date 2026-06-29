@@ -330,7 +330,10 @@
     root.id = "yanxi-chatbot";
     root.innerHTML =
       '<button class="chatbot-toggle" aria-label="Open chat" type="button">' +
-      '<span class="chatbot-toggle-icon">💬</span></button>' +
+      '<svg class="chatbot-toggle-icon" viewBox="0 0 24 24" width="26" height="26" ' +
+      'fill="currentColor" aria-hidden="true">' +
+      '<path d="M4 3 H20 a3 3 0 0 1 3 3 V14 a3 3 0 0 1 -3 3 H15 l-3 3.5 L9 17 H4 ' +
+      'a3 3 0 0 1 -3 -3 V6 a3 3 0 0 1 3 -3 Z"/></svg></button>' +
       '<div class="chatbot-panel" role="dialog" aria-label="Ask about Yanxi">' +
       '  <div class="chatbot-header">' +
       '    <span>Ask me about Yanxi 💬</span>' +

@@ -1,88 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<!-- Design: Forty by HTML5 UP (html5up.net) — CC-BY 3.0. Adapted into Flask/Jinja. -->
+<html>
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:title" content="Personal Portfolio">
-    <meta property="og:description" content="My Personal Portfolio">
-    <meta property="og:url" content="{{ url }}">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
-
-    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
     <title>Yanxi Pan</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='forty/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/yanxi-forty.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon" />
+    <noscript>
+        <link rel="stylesheet" href="{{ url_for('static', filename='forty/css/noscript.css') }}" />
+    </noscript>
 </head>
 
-<body>
-    <header class="nav-bar">
-        <div class="nav-content">
-            <a href="/">
-                <div class="nav-logo">
-                    <img src="{{ url_for('static', filename='img/logo.svg') }}" />
-                </div>
-            </a>
-        </div>
-    </header>
+<body class="is-preload">
+    <div id="wrapper">
 
-    <!-- Profile -->
-    <div class="profile">
-        <div class="profile-picture">
-            <img src="{{ url_for('static', filename='img/Yanxi_profile.jpg') }}" alt="Yanxi Pan">
-        </div>
-        <h1>Yanxi Pan</h1>
-    </div>
+        <!-- Header -->
+        <header id="header" class="alt">
+            <a href="/" class="logo"><strong>Yanxi Pan</strong> <span>Portfolio</span></a>
+            <nav><a href="#menu">Menu</a></nav>
+        </header>
 
-    <!-- Menu bar — dynamically generated from the pages passed by the route -->
-    <nav class="menu-bar yanxi-menu">
-        {% for page in pages %}
-        <a href="{{ page.url }}" class="{% if page.url == request.path %}active{% endif %}">{{ page.name }}</a>
-        {% endfor %}
-    </nav>
-
-    <!-- About -->
-    <section class="about">
-        <h2>About Me</h2>
-        <p>Hi, I'm Yanxi Pan, a CS graduate student at Northeastern University
-            (Silicon Valley) and an MLH Fellow. I build AI-powered tools that bridge
-            language models and real user needs, with a focus on full-stack development,
-            NLP pipelines, and turning research prototypes into polished products.</p>
-    </section>
-
-    <!-- Work Experience -->
-    <section class="work-experience">
-        <h2>Work Experience</h2>
-        {% for experience in work_experiences %}
-        <div class="experience">
-            <h3>{{ experience.company }}</h3>
-            <p>{{ experience.role }}</p>
-            <p>{{ experience.duration }}</p>
-            <ul>
-                {% for point in experience.description %}
-                    <li>{{ point }}</li>
+        <!-- Menu -->
+        <nav id="menu">
+            <ul class="links">
+                <li><a href="/">Home</a></li>
+                {% for page in pages %}
+                <li><a href="{{ page.url }}">{{ page.name }}</a></li>
                 {% endfor %}
             </ul>
-        </div>
-        {% endfor %}
-    </section>
+            <ul class="actions stacked">
+                <li><a href="mailto:pan.yanxi@northeastern.edu" class="button primary fit">Email me</a></li>
+            </ul>
+        </nav>
 
-    <!-- Education -->
-    <section class="education">
-        <h2>Education</h2>
-        {% for education in educations %}
-        <div class="education-item">
-            <h3>{{ education.school }}</h3>
-            <p>{{ education.degree }} | {{ education.duration }}</p>
+        <!-- Banner -->
+        <section id="banner" class="major">
+            <div class="inner">
+                <img src="{{ url_for('static', filename='img/Yanxi_profile.jpg') }}" alt="Yanxi Pan" class="banner-avatar" />
+                <header class="major">
+                    <h1>Hi, I'm Yanxi Pan</h1>
+                </header>
+                <div class="content">
+                    <p>CS grad student at Northeastern University (Silicon Valley) &amp; MLH Fellow —<br />
+                        I build AI-powered tools that bridge language models and real user needs.</p>
+                    <ul class="actions">
+                        <li><a href="#about" class="button next scrolly">Learn more</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main -->
+        <div id="main">
+
+            <!-- Tiles (colorful navigation grid — Forty auto-colors each) -->
+            <section class="tiles">
+                <article>
+                    <span class="image"><img src="{{ url_for('static', filename='img/tiles/about.jpg') }}" alt="" /></span>
+                    <header class="major">
+                        <h3><a href="#about" class="link">About Me</a></h3>
+                        <p>Who I am</p>
+                    </header>
+                </article>
+                <article>
+                    <span class="image"><img src="{{ url_for('static', filename='img/tiles/work.jpg') }}" alt="" /></span>
+                    <header class="major">
+                        <h3><a href="#work" class="link">Work &amp; Projects</a></h3>
+                        <p>What I've built</p>
+                    </header>
+                </article>
+                <article>
+                    <span class="image"><img src="{{ url_for('static', filename='img/tiles/hobbies.jpg') }}" alt="" /></span>
+                    <header class="major">
+                        <h3><a href="{{ url_for('yanxi_hobbies') }}" class="link">Hobbies</a></h3>
+                        <p>What I love</p>
+                    </header>
+                </article>
+                <article>
+                    <span class="image"><img src="{{ url_for('static', filename='img/tiles/places.jpg') }}" alt="" /></span>
+                    <header class="major">
+                        <h3><a href="{{ url_for('yanxi_places') }}" class="link">Places I've Visited</a></h3>
+                        <p>Where I've been</p>
+                    </header>
+                </article>
+            </section>
+
+            <!-- About -->
+            <section id="about">
+                <div class="inner">
+                    <header class="major">
+                        <h2>About Me</h2>
+                    </header>
+                    <p>Hi, I'm Yanxi Pan, a CS graduate student at Northeastern University (Silicon Valley)
+                        and an MLH Fellow. I build AI-powered tools that bridge language models and real user
+                        needs, with a focus on full-stack development, NLP pipelines, and turning research
+                        prototypes into polished products.</p>
+                </div>
+            </section>
+
+            <!-- Work Experience -->
+            <section id="work">
+                <div class="inner">
+                    <header class="major">
+                        <h2>Work Experience</h2>
+                    </header>
+                    {% for experience in work_experiences %}
+                    <h3>{{ experience.company }}</h3>
+                    <p><strong>{{ experience.role }}</strong> &nbsp;·&nbsp; {{ experience.duration }}</p>
+                    <ul>
+                        {% for point in experience.description %}
+                        <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section id="education">
+                <div class="inner">
+                    <header class="major">
+                        <h2>Education</h2>
+                    </header>
+                    {% for education in educations %}
+                    <h3>{{ education.school }}</h3>
+                    <p>{{ education.degree }} | {{ education.duration }}</p>
+                    {% endfor %}
+                </div>
+            </section>
+
         </div>
-        {% endfor %}
-    </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+                <ul class="icons">
+                    <li><a href="https://github.com/YennieP" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                    <li><a href="https://www.linkedin.com/in/yanxi-pan-19549a335/" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="mailto:pan.yanxi@northeastern.edu" id="email-trigger" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+                </ul>
+                <ul class="copyright">
+                    <li>&copy; Yanxi Pan</li>
+                    <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Email contact popup (copyable) -->
+    <div id="email-popup" class="email-popup">
+        <div class="email-popup-card">
+            <button class="email-popup-close" type="button" aria-label="Close">&times;</button>
+            <p class="email-popup-label">Email me at</p>
+            <div class="email-popup-row">
+                <code id="email-addr">pan.yanxi@northeastern.edu</code>
+                <button id="email-copy" class="email-copy-btn" type="button">Copy</button>
+            </div>
+            <a class="email-popup-mail" href="mailto:pan.yanxi@northeastern.edu">Open in mail app →</a>
+        </div>
+    </div>
 
     {% include '_yanxi_chatbot.html' %}
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='forty/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='forty/js/jquery.scrolly.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='forty/js/jquery.scrollex.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='forty/js/browser.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='forty/js/breakpoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='forty/js/util.js') }}"></script>
+    <script src="{{ url_for('static', filename='forty/js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/copy-email.js') }}"></script>
+
 </body>
 
 </html>

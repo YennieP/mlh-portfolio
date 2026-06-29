@@ -225,6 +225,12 @@ body {
     height: 60px;
     border-radius: 50%;
     border: none;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
     background: #1C539F;
     color: #fff;
     font-size: 26px;
