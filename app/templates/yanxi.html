@@ -17,24 +17,7 @@
 <body class="is-preload">
     <div id="wrapper">
 
-        <!-- Header -->
-        <header id="header" class="alt">
-            <a href="/" class="logo"><strong>Yanxi Pan</strong> <span>Portfolio</span></a>
-            <nav><a href="#menu">Menu</a></nav>
-        </header>
-
-        <!-- Menu -->
-        <nav id="menu">
-            <ul class="links">
-                <li><a href="/">Home</a></li>
-                {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.name }}</a></li>
-                {% endfor %}
-            </ul>
-            <ul class="actions stacked">
-                <li><a href="mailto:pan.yanxi@northeastern.edu" class="button primary fit">Email me</a></li>
-            </ul>
-        </nav>
+        {% include '_yanxi_header.html' %}
 
         <!-- Banner -->
         <section id="banner" class="major">
@@ -134,47 +117,11 @@
 
         </div>
 
-        <!-- Footer -->
-        <footer id="footer">
-            <div class="inner">
-                <ul class="icons">
-                    <li><a href="https://github.com/YennieP" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                    <li><a href="https://www.linkedin.com/in/yanxi-pan-19549a335/" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-                    <li><a href="mailto:pan.yanxi@northeastern.edu" id="email-trigger" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-                </ul>
-                <ul class="copyright">
-                    <li>&copy; Yanxi Pan</li>
-                    <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-                </ul>
-            </div>
-        </footer>
+        {% include '_yanxi_footer.html' %}
 
     </div>
 
-    <!-- Email contact popup (copyable) -->
-    <div id="email-popup" class="email-popup">
-        <div class="email-popup-card">
-            <button class="email-popup-close" type="button" aria-label="Close">&times;</button>
-            <p class="email-popup-label">Email me at</p>
-            <div class="email-popup-row">
-                <code id="email-addr">pan.yanxi@northeastern.edu</code>
-                <button id="email-copy" class="email-copy-btn" type="button">Copy</button>
-            </div>
-            <a class="email-popup-mail" href="mailto:pan.yanxi@northeastern.edu">Open in mail app →</a>
-        </div>
-    </div>
-
-    {% include '_yanxi_chatbot.html' %}
-
-    <!-- Scripts -->
-    <script src="{{ url_for('static', filename='forty/js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='forty/js/jquery.scrolly.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='forty/js/jquery.scrollex.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='forty/js/browser.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='forty/js/breakpoints.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='forty/js/util.js') }}"></script>
-    <script src="{{ url_for('static', filename='forty/js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/copy-email.js') }}"></script>
+    {% include '_yanxi_scripts.html' %}
 
 </body>
 

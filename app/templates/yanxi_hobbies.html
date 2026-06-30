@@ -1,71 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<!-- Design: Forty by HTML5 UP (html5up.net) — CC-BY 3.0. Adapted into Flask/Jinja. -->
+<html>
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:title" content="Personal Portfolio">
-    <meta property="og:description" content="My Personal Portfolio">
-    <meta property="og:url" content="{{ url }}">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
-
-    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
     <title>Yanxi Pan — Hobbies</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='forty/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/yanxi-forty.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon" />
+    <noscript>
+        <link rel="stylesheet" href="{{ url_for('static', filename='forty/css/noscript.css') }}" />
+    </noscript>
 </head>
 
-<body>
-    <header class="nav-bar">
-        <div class="nav-content">
-            <a href="/">
-                <div class="nav-logo">
-                    <img src="{{ url_for('static', filename='img/logo.svg') }}" />
-                </div>
-            </a>
-        </div>
-    </header>
+<body class="is-preload">
+    <div id="wrapper">
 
-    <!-- Profile -->
-    <div class="profile">
-        <div class="profile-picture">
-            <img src="{{ url_for('static', filename='img/Yanxi_profile.jpg') }}" alt="Yanxi Pan">
+        {% include '_yanxi_header.html' %}
+
+        <!-- Banner (compact sub-page header) -->
+        <section id="banner" class="major sub">
+            <div class="inner">
+                <header class="major">
+                    <h1>Hobbies</h1>
+                </header>
+                <div class="content">
+                    <p>What I love doing when I'm not building things.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main -->
+        <div id="main">
+            <section id="hobbies">
+                <div class="inner">
+                    {% for hobby in hobbies %}
+                    <div class="yanxi-hobby">
+                        <div class="hobby-text">
+                            <h3>{{ hobby.name }}</h3>
+                            {% if hobby.description %}
+                            <p>{{ hobby.description }}</p>
+                            {% endif %}
+                        </div>
+                        {% if hobby.image %}
+                        <div class="hobby-icon-wrap">
+                            <img class="hobby-photo" src="{{ url_for('static', filename=hobby.image) }}" alt="{{ hobby.name }}" />
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
         </div>
-        <h1>Yanxi Pan</h1>
+
+        {% include '_yanxi_footer.html' %}
+
     </div>
 
-    <!-- Menu bar — dynamically generated from the pages passed by the route -->
-    <nav class="menu-bar yanxi-menu">
-        {% for page in pages %}
-        <a href="{{ page.url }}" class="{% if page.url == request.path %}active{% endif %}">{{ page.name }}</a>
-        {% endfor %}
-    </nav>
+    {% include '_yanxi_scripts.html' %}
 
-    <!-- Hobbies -->
-    <section class="hobbies" id="hobbies">
-        <h2>Hobbies</h2>
-        {% for hobby in hobbies %}
-        <div class="hobby yanxi-hobby">
-            <div class="hobby-text">
-                <h3>{{ hobby.name }}</h3>
-                {% if hobby.description %}
-                <p>{{ hobby.description }}</p>
-                {% endif %}
-            </div>
-            {% if hobby.image %}
-            <div class="hobby-icon-wrap">
-                <img class="hobby-photo" src="{{ url_for('static', filename=hobby.image) }}" alt="{{ hobby.name }}">
-            </div>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </section>
-
-    {% include '_yanxi_chatbot.html' %}
 </body>
 
 </html>

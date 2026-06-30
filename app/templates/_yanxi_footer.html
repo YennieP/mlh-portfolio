@@ -1,0 +1,29 @@
+<!-- Shared footer + copyable email popup for Yanxi's Forty-themed pages.
+     HTML5 UP "Forty" is CC-BY 3.0 — keep the "Design: HTML5 UP" attribution.
+     The popup is a fixed-position overlay, so its place in the DOM doesn't matter. -->
+<footer id="footer">
+    <div class="inner">
+        <ul class="icons">
+            <li><a href="https://github.com/YennieP" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            <li><a href="https://www.linkedin.com/in/yanxi-pan-19549a335/" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+            <li><a href="mailto:pan.yanxi@northeastern.edu" id="email-trigger" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; Yanxi Pan</li>
+            <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+        </ul>
+    </div>
+</footer>
+
+<!-- Email contact popup (lets visitors copy the address instead of forcing a mailto) -->
+<div id="email-popup" class="email-popup">
+    <div class="email-popup-card">
+        <button class="email-popup-close" type="button" aria-label="Close">&times;</button>
+        <p class="email-popup-label">Email me at</p>
+        <div class="email-popup-row">
+            <code id="email-addr">pan.yanxi@northeastern.edu</code>
+            <button id="email-copy" class="email-copy-btn" type="button">Copy</button>
+        </div>
+        <a class="email-popup-mail" href="mailto:pan.yanxi@northeastern.edu">Open in mail app &rarr;</a>
+    </div>
+</div>
