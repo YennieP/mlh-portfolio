@@ -40,9 +40,9 @@
         "Let's play! 🎉 Try asking about her cats 🐱, milk tea vs coffee 🧋, her favorite project, where she's traveled, or her spirit personality (MBTI). Go on, pick something 👇",
       ],
       chips: [
-        { label: "Does she have pets? 🐱", q: "does she have pets" },
-        { label: "Favorite country? 🌍", q: "what is your favorite country" },
-        { label: "What music? 🎶", q: "what music do you like" },
+        { label: "Does she have pets?", q: "does she have pets" },
+        { label: "Favorite country?", q: "what is your favorite country" },
+        { label: "What music?", q: "what music do you like" },
       ],
       sticker: null,
     },
@@ -61,7 +61,7 @@
         "Oh, she's built a few things she's proud of! ✨\n• Fanfic Assistant — an AI platform for long-form creative writing\n• SQL Buddy — an AI-powered SQL learning tool\n• NLP research on LLM semantic understanding\n• An LLM medical-dialogue evaluation platform\nWant to know her favorite one? 👀",
       ],
       chips: [
-        { label: "Which one's her favorite? 👀", q: "what is your favorite project" },
+        { label: "Which one's her favorite?", q: "what is your favorite project" },
         { label: "What does she like to do for fun?", q: "hobbies" },
       ],
       sticker: null,
@@ -93,7 +93,7 @@
         "She's been to Russia 🇷🇺, Japan 🇯🇵, Thailand 🇹🇭, the United States 🇺🇸, China 🇨🇳, Hungary 🇭🇺 (Budapest!), and Germany 🇩🇪. Ask her which is her favorite 👀",
       ],
       chips: [
-        { label: "Which country is her favorite? 👀", q: "what is your favorite country" },
+        { label: "Which country is her favorite?", q: "what is your favorite country" },
       ],
       sticker: null,
     },
@@ -255,13 +255,13 @@
 
   // Playful starter chips shown on open and after fallback. Picked/rotated for variety.
   var STARTER_CHIPS = [
-    { label: "What has she built? 🚀", q: "projects" },
-    { label: "What does she do for fun? 🎶", q: "hobbies" },
-    { label: "Where has she traveled? ✈️", q: "places visited" },
-    { label: "Ask something fun 👀", q: "surprise me" },
-    { label: "Does she have pets? 🐱", q: "does she have pets" },
-    { label: "How do I reach her? 📧", q: "contact" },
-    { label: "Coffee or tea? 🧋", q: "coffee or tea" },
+    { label: "What has she built?", q: "projects" },
+    { label: "What does she do for fun?", q: "hobbies" },
+    { label: "Where has she traveled?", q: "places visited" },
+    { label: "Ask something fun", q: "surprise me" },
+    { label: "Does she have pets?", q: "does she have pets" },
+    { label: "How do I reach her?", q: "contact" },
+    { label: "Coffee or tea?", q: "coffee or tea" },
   ];
 
   // ---- Matching -----------------------------------------------------------
@@ -285,33 +285,71 @@
     return new RegExp("(^|\\s)" + escaped + "(\\s|$)").test(norm);
   }
 
+  // How many intents each keyword appears in. Used to down-weight keywords that are
+  // shared across intents (TF-IDF idea: a word unique to one intent is a stronger
+  // signal than a common one). Computed once from INTENTS.
+  var KEYWORD_DF = (function () {
+    var df = {};
+    for (var i = 0; i < INTENTS.length; i++) {
+      var seen = {};
+      var kws = INTENTS[i].keywords;
+      for (var k = 0; k < kws.length; k++) {
+        if (!seen[kws[k]]) { seen[kws[k]] = true; df[kws[k]] = (df[kws[k]] || 0) + 1; }
+      }
+    }
+    return df;
+  })();
+
+  // Weight a keyword by specificity instead of a flat +2/+1:
+  //   weight = (words in the phrase) / (how many intents use this keyword)
+  // → longer, more distinctive phrases count more; generic shared words count less.
+  function keywordWeight(kw) {
+    var words = kw.split(/\s+/).length;
+    return words / (KEYWORD_DF[kw] || 1);
+  }
+
+  // If the top two intents are closer than this, treat the match as ambiguous
+  // (low confidence) and send it to the fallback instead of guessing wrong.
+  var CONFIDENCE_MARGIN = 0.5;
+
   function match(text) {
     var norm = normalize(text);
     if (!norm) return null;
-    var best = null;
-    var bestScore = 0;
+
+    var scored = [];
     for (var i = 0; i < INTENTS.length; i++) {
       var intent = INTENTS[i];
       var score = 0;
       for (var k = 0; k < intent.keywords.length; k++) {
-        var kw = intent.keywords[k];
-        // Multi-word keyword weighs more (more specific) than a single word.
-        if (keywordHit(norm, kw)) score += kw.indexOf(" ") >= 0 ? 2 : 1;
+        if (keywordHit(norm, intent.keywords[k])) score += keywordWeight(intent.keywords[k]);
       }
-      if (score > bestScore) {
-        bestScore = score;
-        best = intent;
-      }
+      if (score > 0) scored.push({ intent: intent, score: score });
     }
-    return bestScore > 0 ? best : null;
+    if (!scored.length) return null; // nothing matched → fallback
+
+    scored.sort(function (a, b) { return b.score - a.score; });
+    // Tie / near-tie → ambiguous → don't guess; let the fallback guide the user.
+    if (scored.length > 1 && scored[0].score - scored[1].score < CONFIDENCE_MARGIN) {
+      return null;
+    }
+    return scored[0].intent;
   }
 
   function pick(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
+  // Guide questions the user already clicked this session (by query string).
+  // In-memory only, so it resets on page refresh — exactly the desired behavior.
+  var clickedChips = {};
+
+  function unclicked(list) {
+    return (list || []).filter(function (c) { return !clickedChips[c.q]; });
+  }
+
+  // Sample up to n starter suggestions the user hasn't already used.
   function sampleChips(n) {
-    var pool = STARTER_CHIPS.slice();
+    var pool = unclicked(STARTER_CHIPS);
     var out = [];
     for (var i = 0; i < n && pool.length; i++) {
       out.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
@@ -381,7 +419,7 @@
     if (!greeted) {
       greeted = true;
       var g = pick(intentById("greeting").responses);
-      addBotMessage(g, sampleChips(3));
+      addBotMessage(g);
     }
   }
 
@@ -413,11 +451,30 @@
       b.className = "chatbot-chip";
       b.textContent = chip.label;
       b.addEventListener("click", function () {
+        clickedChips[chip.q] = true; // don't suggest this one again this session
         addUserMessage(chip.label);
         respond(chip.q);
       });
       els.chips.appendChild(b);
     });
+    // Chips take vertical space below the messages area; re-scroll AFTER the
+    // browser lays them out, so the last message stays visible.
+    requestAnimationFrame(scrollDown);
+  }
+
+  // What to show below a reply: this intent's unused follow-ups, else fresh
+  // starter suggestions; once the user has clicked them all, invite free-form questions.
+  function showSuggestions(intentChips) {
+    var chips = unclicked(intentChips);
+    if (!chips.length) chips = sampleChips(3);
+    if (chips.length) renderChips(chips);
+    else renderInvite();
+  }
+
+  function renderInvite() {
+    els.chips.innerHTML =
+      '<span class="chatbot-invite">That’s all my quick questions — type your own to ask me anything!</span>';
+    requestAnimationFrame(scrollDown);
   }
 
   // Bot message with typing delay + typewriter, then optional sticker + chips.
@@ -444,7 +501,7 @@
           el.appendChild(img);
           scrollDown();
         }
-        renderChips(chips && chips.length ? chips : sampleChips(3));
+        showSuggestions(chips);
       });
     }, delay);
   }
@@ -477,7 +534,7 @@
     if (intent) {
       addBotMessage(pick(intent.responses), intent.chips, intent.sticker);
     } else {
-      addBotMessage(pick(FALLBACK.responses), sampleChips(3));
+      addBotMessage(pick(FALLBACK.responses));
     }
   }
 
