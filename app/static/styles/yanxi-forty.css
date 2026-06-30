@@ -401,10 +401,74 @@
     .chatbot-panel { width: calc(100vw - 28px); height: min(72vh, 560px); bottom: 70px; }
 }
 
+/* ===== Sub-page banner (compact title header for Hobbies / Places) ===== */
+#banner.sub {
+    height: auto;
+    min-height: 0;
+    padding: 9em 0 5em;
+}
+
+/* ===== Hobby rows (Hobbies page) — text left, photo right, on dark ===== */
+.yanxi-hobby {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--y-border);
+}
+
+.yanxi-hobby:last-child {
+    border-bottom: 0;
+}
+
+.yanxi-hobby .hobby-text {
+    flex: 1;
+}
+
+.yanxi-hobby .hobby-text h3 {
+    margin-bottom: 8px;
+    color: var(--y-accent);
+}
+
+/* Fixed-width column so every photo sits in the same slot → tidy vertical column. */
+.hobby-icon-wrap {
+    flex-shrink: 0;
+    width: 160px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Uniform square thumbnails so different photo sizes still line up neatly. */
+.yanxi-hobby .hobby-photo {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    border: 1px solid var(--y-border);
+}
+
+/* On narrow screens, stack the photo under the text so nothing overflows. */
+@media (max-width: 736px) {
+    .yanxi-hobby {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .hobby-icon-wrap {
+        width: auto;
+        justify-content: flex-start;
+    }
+}
+
 /* ===== Leaflet map (used on the Places page) ===== */
 .visited-map {
-    height: 420px;
-    max-width: 820px;
-    margin: 0 auto 40px;
-    border-radius: 10px;
+    height: 460px;
+    max-width: 860px;
+    margin: 0 auto;
+    border-radius: 12px;
+    border: 1px solid var(--y-border);
 }

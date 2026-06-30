@@ -1,0 +1,52 @@
+<!-- Shared end-of-body scripts for Yanxi's Forty-themed pages:
+     chatbot widget + Forty's bundled JS + the email-popup logic. -->
+{% include '_yanxi_chatbot.html' %}
+
+<script src="{{ url_for('static', filename='forty/js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='forty/js/jquery.scrolly.min.js') }}"></script>
+<script src="{{ url_for('static', filename='forty/js/jquery.scrollex.min.js') }}"></script>
+<script src="{{ url_for('static', filename='forty/js/browser.min.js') }}"></script>
+<script src="{{ url_for('static', filename='forty/js/breakpoints.min.js') }}"></script>
+<script src="{{ url_for('static', filename='forty/js/util.js') }}"></script>
+<script src="{{ url_for('static', filename='forty/js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/copy-email.js') }}"></script>
+
+<!-- Fixes for Forty's page-transition fade (see comments). Must run after main.js. -->
+<script>
+    (function () {
+        var $ = window.jQuery;
+
+        /* Fix A — "blank page after Back".
+           Forty fades #wrapper out (adds .is-transitioning) before navigating, and only
+           clears body.is-preload on the 'load' event. A bfcache restore (Back button)
+           skips 'load' and can keep #wrapper faded out (opacity:0) → the page looks empty.
+           Clear both states every time the page is shown. */
+        window.addEventListener("pageshow", function () {
+            document.body.classList.remove("is-preload");
+            var w = document.getElementById("wrapper");
+            if (w) w.classList.remove("is-transitioning");
+        });
+
+        /* Fix B — tiles that point to in-page sections (About / Work).
+           Forty's tile handler fades the page out then sets location.href. For a same-page
+           anchor (#about) that never reloads, so #wrapper stays faded out → blank. Replace
+           those tiles' handlers with a plain smooth-scroll. Tiles pointing to real pages
+           (Hobbies / Places) keep Forty's nice fade-and-navigate transition. */
+        if ($) {
+            $("#main .tiles > article").each(function () {
+                var href = $(this).find('a[href^="#"]').first().attr("href") || "";
+                if (href.charAt(0) !== "#") return; // real page link → leave Forty's transition
+                $(this).find("a").off("click").on("click", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var target = document.querySelector(href);
+                    if (!target) return;
+                    var header = document.getElementById("header");
+                    var offset = header ? header.offsetHeight : 0;
+                    var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: y, behavior: "smooth" });
+                });
+            });
+        }
+    })();
+</script>
