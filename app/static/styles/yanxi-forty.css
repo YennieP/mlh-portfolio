@@ -472,3 +472,46 @@
     border-radius: 12px;
     border: 1px solid var(--y-border);
 }
+
+/* ===== Timeline posts feed (Timeline page) ===== */
+.post {
+    background: var(--y-bg-alt);
+    border: 1px solid var(--y-border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.post .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--y-border);
+    background: var(--y-bg-deep);
+}
+
+.post-header strong {
+    color: var(--y-text);
+    font-size: 1.05em;
+}
+
+.post-meta {
+    color: rgba(244, 244, 255, 0.55);
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    word-break: break-word;
+}
+
+.post-content {
+    color: var(--y-text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+}

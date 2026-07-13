@@ -2,7 +2,6 @@ import os
 import datetime
 from peewee import *
 from playhouse.shortcuts import model_to_dict
-from peewee import *
 from flask import Flask, render_template, request, url_for
 from dotenv import load_dotenv
 
@@ -111,6 +110,7 @@ def yanxi_pages():
         {"name": "About Me", "url": url_for('yanxi')},
         {"name": "Hobbies", "url": url_for('yanxi_hobbies')},
         {"name": "Places", "url": url_for('yanxi_places')},
+        {"name": "Timeline", "url": url_for('timeline')},
     ]
 
 @app.route('/yanxi/hobbies')
@@ -162,3 +162,7 @@ def get_time_line_post():
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
     }
+
+@app.route('/timeline')
+def timeline():
+    return render_template('timeline.html', title="Timeline", pages=yanxi_pages())
