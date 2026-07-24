@@ -136,6 +136,8 @@ body.yx-modal-lock { overflow: hidden; }
 @media (max-width: 736px) {
     .yx-modal-card { max-height: 88vh; }
     .yx-modal-body { padding: 2em 1.4em 1.6em; }
+    /* phones: near-full (60vw would be too narrow here) */
+    .yx-modal-chat { width: calc(100vw - 32px); height: 88vh; }
 }
 
 /* ===== Email contact popup (copyable) ===== */
@@ -254,8 +256,11 @@ body.yx-modal-lock { overflow: hidden; }
    (.chatbot-header / .chatbot-messages / .chatbot-chips / .chatbot-input) are
    styled further down and reused as-is inside the modal card. */
 .yx-modal-chat {
-    width: min(520px, 100%);      /* bigger on desktop; phones still cap at 100% */
-    height: min(680px, 85vh);     /* bigger on desktop; phones still cap at 85vh */
+    /* Size relative to the viewport so it scales with the window across monitors;
+       caps keep it from getting absurdly large on ultra-wide screens.
+       (Phones are handled by the max-width:736px media query below.) */
+    width: min(60vw, 900px);
+    height: min(78vh, 800px);
     padding: 0;
 }
 
