@@ -84,14 +84,7 @@ def jahabe_hobbies():
 @app.route('/yanxi')
 def yanxi():
     experiences = [
-        {"company": "Fanfic Assistant", "role": "Full-Stack Developer", "duration": "Feb 2026 - Present", "description": [
-            "Built an AI-powered platform for Chinese long-form creative writing.",
-            "Implemented multi-provider LLM support, pgvector-based style retrieval for character consistency, and a bilingual React + FastAPI interface with real-time evaluation metrics."
-        ]},
-        {"company": "SQL Buddy", "role": "Backend Developer", "duration": "Sep 2025 - Dec 2025", "description": [
-            "Developed an AI-powered SQL learning platform that auto-generates graded exercises via the ChatGPT API.",
-            "Evaluated solutions in real time against a cloud MySQL database on GCP, built with Python and Django."
-        ]},
+        # --- Internships (newest → oldest) ---
         {"company": "NLP Semantic Understanding in M2M Communication", "role": "Research Assistant", "duration": "Sep 2024 - Jan 2025", "description": [
             "Researched the semantic fidelity of LLMs (BERT, GPT, RoBERTa) in cross-domain machine-to-machine communication.",
             "Evaluated results with cosine similarity and PCA across multiple domain benchmarks."
@@ -99,6 +92,19 @@ def yanxi():
         {"company": "LLM Medical Dialogue Platform", "role": "LLM Engineer", "duration": "Jul 2024 - Sep 2024", "description": [
             "Built an LLM-based platform for doctor-patient consultation simulation and iterative model evaluation.",
             "Tuned RNALens hyperparameters, improving Spearman correlation from 0.78 to 0.88 across three prompt iterations."
+        ]},
+        {"company": "WeBank", "role": "Backend Engineering Intern", "duration": "Jun 2023 - Aug 2023 · Shenzhen, China", "description": [
+            "Integrated cross-system data into MySQL and Neo4j with concurrent synchronization logic.",
+            "Developed RESTful APIs using Spring Boot for data synchronization and query services."
+        ]},
+        # --- Projects (newest → oldest) ---
+        {"company": "Fanfic Assistant", "role": "Full-Stack Developer", "duration": "Feb 2026 - Present", "description": [
+            "Built an AI-powered platform for Chinese long-form creative writing.",
+            "Implemented multi-provider LLM support, pgvector-based style retrieval for character consistency, and a bilingual React + FastAPI interface with real-time evaluation metrics."
+        ]},
+        {"company": "SQL Buddy", "role": "Backend Developer", "duration": "Sep 2025 - Dec 2025", "description": [
+            "Developed an AI-powered SQL learning platform that auto-generates graded exercises via the ChatGPT API.",
+            "Evaluated solutions in real time against a cloud MySQL database on GCP, built with Python and Django."
         ]},
     ]
     education = [

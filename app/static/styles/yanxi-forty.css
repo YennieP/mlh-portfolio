@@ -572,3 +572,12 @@ body.yx-modal-lock { overflow: hidden; }
     word-wrap: break-word;
     margin: 0;
 }
+
+/* Timeline form submit status (validation / server errors, success) */
+.timeline-status {
+    min-height: 1.2em;
+    margin: 0.6em 0 0;
+    font-size: 0.9em;
+}
+.timeline-status.is-error { color: #ff9b9b; }
+.timeline-status.is-success { color: var(--y-accent); }

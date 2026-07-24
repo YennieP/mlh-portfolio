@@ -58,6 +58,7 @@
                         <ul class="actions">
                             <li><input type="submit" value="Post" class="primary" /></li>
                         </ul>
+                        <p id="form-status" class="timeline-status" aria-live="polite"></p>
                     </form>
                 </div>
             </section>
@@ -126,13 +127,37 @@
             });
         }
 
+        // Native validation bubbles follow the browser's locale (e.g. Chinese).
+        // Override them so the prompts are always in English.
+        var validationMsgs = {
+            name: 'Please enter your name.',
+            email: 'Please enter a valid email address.',
+            content: 'Please enter your message.'
+        };
+        Object.keys(validationMsgs).forEach(function (id) {
+            var el = document.getElementById(id);
+            el.addEventListener('invalid', function () { el.setCustomValidity(validationMsgs[id]); });
+            el.addEventListener('input', function () { el.setCustomValidity(''); });
+        });
+
+        var formStatus = document.getElementById('form-status');
         document.getElementById('timeline-form').addEventListener('submit', async function (e) {
             e.preventDefault();
+            formStatus.textContent = '';
+            formStatus.className = 'timeline-status';
             const formData = new FormData(this);
             const response = await fetch('/api/timeline_post', { method: 'POST', body: formData });
             if (response.ok) {
                 this.reset();
+                formStatus.textContent = 'Posted!';
+                formStatus.className = 'timeline-status is-success';
                 loadPosts();
+            } else {
+                // Show the server's (English) validation error.
+                var data = {};
+                try { data = await response.json(); } catch (err) {}
+                formStatus.textContent = data.error || 'Something went wrong — please try again.';
+                formStatus.className = 'timeline-status is-error';
             }
         });
 
