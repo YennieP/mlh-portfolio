@@ -32,15 +32,75 @@
     margin-bottom: 1.5rem;
 }
 
-/* --- Section hover highlight: smooth tint + left accent bar to clarify boundaries
-   (skips the .tiles grid, which has its own hover effect) --- */
-#main > section:not(.tiles) {
-    transition: background-color 0.35s ease, box-shadow 0.35s ease;
+/* ===== In-page info modals (About / Work / Education tiles + "Learn more") ===== */
+.yx-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    background: rgba(0, 0, 0, 0.6);
 }
 
-#main > section:not(.tiles):hover {
-    background-color: rgba(155, 241, 255, 0.05);
-    box-shadow: inset 4px 0 0 var(--y-cyan);
+.yx-modal.is-open {
+    display: flex;
+    animation: chatbotPop 0.18s ease;
+}
+
+.yx-modal-card {
+    position: relative;
+    width: min(720px, 100%);
+    max-height: 85vh;      /* tall content scrolls INSIDE the card... */
+    overflow-y: auto;      /* ...while the page behind stays put (body is locked) */
+    background: var(--y-bg-alt);
+    border: 1px solid var(--y-border);
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    padding: 2.5em 2.5em 2em;
+    /* thin scrollbar in the site's colours (Firefox) */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 241, 255, 0.3) transparent;
+}
+
+/* thin scrollbar in the site's colours (Chrome/Edge/Safari) */
+.yx-modal-card::-webkit-scrollbar { width: 8px; }
+.yx-modal-card::-webkit-scrollbar-track { background: transparent; }
+.yx-modal-card::-webkit-scrollbar-thumb { background: rgba(155, 241, 255, 0.25); border-radius: 4px; }
+.yx-modal-card::-webkit-scrollbar-thumb:hover { background: rgba(155, 241, 255, 0.45); }
+
+/* reset Forty's global button styling on the × */
+.yx-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    min-width: 0;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background: none;
+    border: none;
+    color: var(--y-text);
+    font-size: 26px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.yx-modal-close:hover { opacity: 1; }
+.yx-modal-body { color: var(--y-text); }
+.yx-modal-body h2 { color: var(--y-accent); }
+
+/* freeze the page scroll while a modal is open */
+body.yx-modal-lock { overflow: hidden; }
+
+@media (max-width: 736px) {
+    .yx-modal-card { padding: 2em 1.4em 1.6em; max-height: 88vh; }
 }
 
 /* ===== Email contact popup (copyable) ===== */

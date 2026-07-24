@@ -30,7 +30,7 @@
                     <p>CS grad student at Northeastern University (Silicon Valley) &amp; MLH Fellow —<br />
                         I build AI-powered tools that bridge language models and real user needs.</p>
                     <ul class="actions">
-                        <li><a href="#about" class="button next scrolly">Learn more</a></li>
+                        <li><a href="#modal-about" class="button">Learn more</a></li>
                     </ul>
                 </div>
             </div>
@@ -44,15 +44,22 @@
                 <article>
                     <span class="image"><img src="{{ url_for('static', filename='img/tiles/about.jpg') }}" alt="" /></span>
                     <header class="major">
-                        <h3><a href="#about" class="link">About Me</a></h3>
+                        <h3><a href="#modal-about" class="link">About Me</a></h3>
                         <p>Who I am</p>
                     </header>
                 </article>
                 <article>
                     <span class="image"><img src="{{ url_for('static', filename='img/tiles/work.jpg') }}" alt="" /></span>
                     <header class="major">
-                        <h3><a href="#work" class="link">Work &amp; Projects</a></h3>
+                        <h3><a href="#modal-work" class="link">Work &amp; Projects</a></h3>
                         <p>What I've built</p>
+                    </header>
+                </article>
+                <article>
+                    <span class="image"><img src="{{ url_for('static', filename='img/tiles/education.jpg') }}" alt="" /></span>
+                    <header class="major">
+                        <h3><a href="#modal-education" class="link">Education</a></h3>
+                        <p>Where I studied</p>
                     </header>
                 </article>
                 <article>
@@ -78,55 +85,56 @@
                 </article>
             </section>
 
-            <!-- About -->
-            <!-- Testing comment -->
-            <section id="about">
-                <div class="inner">
-                    <header class="major">
-                        <h2>About Me</h2>
-                    </header>
-                    <p>Hi, I'm Yanxi Pan, a CS graduate student at Northeastern University (Silicon Valley)
-                        and an MLH Fellow. I build AI-powered tools that bridge language models and real user
-                        needs, with a focus on full-stack development, NLP pipelines, and turning research
-                        prototypes into polished products.</p>
-                </div>
-            </section>
-
-            <!-- Work Experience -->
-            <section id="work">
-                <div class="inner">
-                    <header class="major">
-                        <h2>Work Experience</h2>
-                    </header>
-                    {% for experience in work_experiences %}
-                    <h3>{{ experience.company }}</h3>
-                    <p><strong>{{ experience.role }}</strong> &nbsp;·&nbsp; {{ experience.duration }}</p>
-                    <ul>
-                        {% for point in experience.description %}
-                        <li>{{ point }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endfor %}
-                </div>
-            </section>
-
-            <!-- Education -->
-            <section id="education">
-                <div class="inner">
-                    <header class="major">
-                        <h2>Education</h2>
-                    </header>
-                    {% for education in educations %}
-                    <h3>{{ education.school }}</h3>
-                    <p>{{ education.degree }} | {{ education.duration }}</p>
-                    {% endfor %}
-                </div>
-            </section>
-
         </div>
 
         {% include '_yanxi_footer.html' %}
 
+    </div>
+
+    <!-- In-page info modals: opened from the About / Work / Education tiles and
+         the banner "Learn more" button. Content lives here, shown on demand. -->
+    <div class="yx-modal" id="modal-about" role="dialog" aria-modal="true" aria-label="About Me">
+        <div class="yx-modal-card">
+            <button class="yx-modal-close" type="button" aria-label="Close">&times;</button>
+            <div class="yx-modal-body">
+                <h2>About Me</h2>
+                <p>Hi, I'm Yanxi Pan, a CS graduate student at Northeastern University (Silicon Valley)
+                    and an MLH Fellow. I build AI-powered tools that bridge language models and real user
+                    needs, with a focus on full-stack development, NLP pipelines, and turning research
+                    prototypes into polished products.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="yx-modal" id="modal-work" role="dialog" aria-modal="true" aria-label="Work Experience">
+        <div class="yx-modal-card">
+            <button class="yx-modal-close" type="button" aria-label="Close">&times;</button>
+            <div class="yx-modal-body">
+                <h2>Work Experience</h2>
+                {% for experience in work_experiences %}
+                <h3>{{ experience.company }}</h3>
+                <p><strong>{{ experience.role }}</strong> &nbsp;·&nbsp; {{ experience.duration }}</p>
+                <ul>
+                    {% for point in experience.description %}
+                    <li>{{ point }}</li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="yx-modal" id="modal-education" role="dialog" aria-modal="true" aria-label="Education">
+        <div class="yx-modal-card">
+            <button class="yx-modal-close" type="button" aria-label="Close">&times;</button>
+            <div class="yx-modal-body">
+                <h2>Education</h2>
+                {% for education in educations %}
+                <h3>{{ education.school }}</h3>
+                <p>{{ education.degree }} | {{ education.duration }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
     {% include '_yanxi_scripts.html' %}

@@ -27,25 +27,41 @@
             if (w) w.classList.remove("is-transitioning");
         });
 
-        /* Fix B — tiles that point to in-page sections (About / Work).
-           Forty's tile handler fades the page out then sets location.href. For a same-page
-           anchor (#about) that never reloads, so #wrapper stays faded out → blank. Replace
-           those tiles' handlers with a plain smooth-scroll. Tiles pointing to real pages
-           (Hobbies / Places) keep Forty's nice fade-and-navigate transition. */
+        /* Fix B — links to an in-page modal (#modal-*) open a popup instead of
+           navigating. Covers the About / Work / Education tiles (Forty clones each
+           tile link into a .primary overlay — both carry the href, so we re-bind
+           both) and the banner "Learn more" button. Tiles pointing to real pages
+           (Hobbies / Places / Timeline) keep Forty's fade-and-navigate transition. */
+        function yxOpenModal(id) {
+            var m = document.getElementById(id);
+            if (!m) return;
+            m.classList.add("is-open");
+            document.body.classList.add("yx-modal-lock"); // freeze the page behind it
+        }
+        function yxCloseModal(m) {
+            m.classList.remove("is-open");
+            if (!document.querySelector(".yx-modal.is-open")) {
+                document.body.classList.remove("yx-modal-lock");
+            }
+        }
         if ($) {
-            $("#main .tiles > article").each(function () {
-                var href = $(this).find('a[href^="#"]').first().attr("href") || "";
-                if (href.charAt(0) !== "#") return; // real page link → leave Forty's transition
-                $(this).find("a").off("click").on("click", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    var target = document.querySelector(href);
-                    if (!target) return;
-                    var header = document.getElementById("header");
-                    var offset = header ? header.offsetHeight : 0;
-                    var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({ top: y, behavior: "smooth" });
-                });
+            $('a[href^="#modal-"]').off("click").on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                yxOpenModal($(this).attr("href").slice(1));
+            });
+            $(".yx-modal").each(function () {
+                var m = this;
+                // click on the dark backdrop (not the card) closes it
+                m.addEventListener("click", function (e) { if (e.target === m) yxCloseModal(m); });
+                var btn = m.querySelector(".yx-modal-close");
+                if (btn) btn.addEventListener("click", function () { yxCloseModal(m); });
+            });
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") {
+                    var open = document.querySelectorAll(".yx-modal.is-open");
+                    for (var i = 0; i < open.length; i++) yxCloseModal(open[i]);
+                }
             });
         }
     })();
