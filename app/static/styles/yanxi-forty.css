@@ -331,7 +331,7 @@ body.yx-modal-lock { overflow: hidden; }
     max-width: 82%;
     padding: 10px 14px;
     border-radius: 14px;
-    font-size: 15px;
+    font-size: 0.85em;   /* relative to the header title (body size) → always slightly smaller */
     line-height: 1.55;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -399,7 +399,7 @@ body.yx-modal-lock { overflow: hidden; }
     border: 1px solid rgba(111, 195, 223, 0.5);
     border-radius: 16px;
     padding: 8px 14px;
-    font-size: 12.5px;
+    font-size: 0.75em;   /* bigger than before, still clearly under the header title */
     text-align: center;
     cursor: pointer;
     transition: background 0.12s ease;
@@ -432,7 +432,7 @@ body.yx-modal-lock { overflow: hidden; }
     border: 1px solid var(--y-border);
     border-radius: 18px;
     padding: 9px 14px;
-    font-size: 15px;
+    font-size: 0.85em;   /* match the message bubbles */
     outline: none;
     background: var(--y-bg-msg);
     color: var(--y-text);
