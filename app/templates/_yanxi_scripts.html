@@ -1,7 +1,6 @@
 <!-- Shared end-of-body scripts for Yanxi's Forty-themed pages:
-     chatbot widget + Forty's bundled JS + the email-popup logic. -->
-{% include '_yanxi_chatbot.html' %}
-
+     Forty's bundled JS + the email-popup logic + modal handling.
+     (The chatbot is only on the home page, loaded there via its own include.) -->
 <script src="{{ url_for('static', filename='forty/js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='forty/js/jquery.scrolly.min.js') }}"></script>
 <script src="{{ url_for('static', filename='forty/js/jquery.scrollex.min.js') }}"></script>
@@ -37,6 +36,8 @@
             if (!m) return;
             m.classList.add("is-open");
             document.body.classList.add("yx-modal-lock"); // freeze the page behind it
+            // the chat popup greets + focuses its input when opened
+            if (id === "modal-chat" && window.yanxiChatActivate) window.yanxiChatActivate();
         }
         function yxCloseModal(m) {
             m.classList.remove("is-open");

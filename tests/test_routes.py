@@ -52,14 +52,13 @@ def test_menu_has_three_tabs(client):
         assert label in page
 
 
-# --- chat widget is scoped to Yanxi's pages ------------------------------
-@pytest.mark.parametrize("path", YANXI_PAGES)
-def test_chatbot_on_yanxi_pages(client, path):
-    assert "chatbot.js" in html(client, path)
+# --- chat widget lives only on Yanxi's home page (opened from the Chat tile) ---
+def test_chatbot_on_home(client):
+    assert "chatbot.js" in html(client, "/yanxi")
 
 
-@pytest.mark.parametrize("path", JANE_PAGES)
-def test_chatbot_not_on_jane_pages(client, path):
+@pytest.mark.parametrize("path", ["/yanxi/hobbies", "/yanxi/places", "/timeline"] + JANE_PAGES)
+def test_chatbot_not_on_other_pages(client, path):
     assert "chatbot.js" not in html(client, path)
 
 

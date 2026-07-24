@@ -359,43 +359,29 @@
 
   // ---- UI -----------------------------------------------------------------
   var els = {};
-  var opened = false;
   var greeted = false;
   var skipTyping = false;
 
   function build() {
-    var root = document.createElement("div");
-    root.id = "yanxi-chatbot";
-    root.innerHTML =
-      '<button class="chatbot-toggle" aria-label="Open chat" type="button">' +
-      '<svg class="chatbot-toggle-icon" viewBox="0 0 24 24" width="26" height="26" ' +
-      'fill="currentColor" aria-hidden="true">' +
-      '<path d="M4 3 H20 a3 3 0 0 1 3 3 V14 a3 3 0 0 1 -3 3 H15 l-3 3.5 L9 17 H4 ' +
-      'a3 3 0 0 1 -3 -3 V6 a3 3 0 0 1 3 -3 Z"/></svg></button>' +
-      '<div class="chatbot-panel" role="dialog" aria-label="Ask about Yanxi">' +
-      '  <div class="chatbot-header">' +
-      '    <span>Ask me about Yanxi 💬</span>' +
-      '    <button class="chatbot-close" aria-label="Close chat" type="button">&times;</button>' +
-      '  </div>' +
-      '  <div class="chatbot-messages"></div>' +
-      '  <div class="chatbot-chips"></div>' +
-      '  <form class="chatbot-input">' +
-      '    <input type="text" placeholder="Ask me anything…" autocomplete="off" aria-label="Your question">' +
-      '    <button type="submit" aria-label="Send">➤</button>' +
-      '  </form>' +
-      '</div>';
-    document.body.appendChild(root);
+    // The chatbot lives inside the #modal-chat popup (home page tile). If the
+    // mount isn't on this page, do nothing.
+    var mount = document.getElementById("yanxi-chatbot-mount");
+    if (!mount) return;
 
-    els.toggle = root.querySelector(".chatbot-toggle");
-    els.panel = root.querySelector(".chatbot-panel");
-    els.close = root.querySelector(".chatbot-close");
-    els.messages = root.querySelector(".chatbot-messages");
-    els.chips = root.querySelector(".chatbot-chips");
-    els.form = root.querySelector(".chatbot-input");
+    mount.innerHTML =
+      '<div class="chatbot-header"><span>Ask me about Yanxi 💬</span></div>' +
+      '<div class="chatbot-messages"></div>' +
+      '<div class="chatbot-chips"></div>' +
+      '<form class="chatbot-input">' +
+      '  <input type="text" placeholder="Ask me anything…" autocomplete="off" aria-label="Your question">' +
+      '  <button type="submit" aria-label="Send">➤</button>' +
+      '</form>';
+
+    els.messages = mount.querySelector(".chatbot-messages");
+    els.chips = mount.querySelector(".chatbot-chips");
+    els.form = mount.querySelector(".chatbot-input");
     els.input = els.form.querySelector("input");
 
-    els.toggle.addEventListener("click", togglePanel);
-    els.close.addEventListener("click", closePanel);
     els.form.addEventListener("submit", function (e) {
       e.preventDefault();
       var q = els.input.value.trim();
@@ -410,24 +396,17 @@
     });
   }
 
-  function togglePanel() {
-    if (opened) return closePanel();
-    opened = true;
-    els.panel.classList.add("is-open");
-    els.toggle.classList.add("is-open");
+  // Called by the modal opener (see _yanxi_scripts.html) whenever the chat
+  // popup opens: focus the input and greet on the first open.
+  function activate() {
+    if (!els.input) return;
     els.input.focus();
     if (!greeted) {
       greeted = true;
-      var g = pick(intentById("greeting").responses);
-      addBotMessage(g);
+      addBotMessage(pick(intentById("greeting").responses));
     }
   }
-
-  function closePanel() {
-    opened = false;
-    els.panel.classList.remove("is-open");
-    els.toggle.classList.remove("is-open");
-  }
+  window.yanxiChatActivate = activate;
 
   function intentById(id) {
     for (var i = 0; i < INTENTS.length; i++) if (INTENTS[i].id === id) return INTENTS[i];
