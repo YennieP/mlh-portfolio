@@ -254,8 +254,8 @@ body.yx-modal-lock { overflow: hidden; }
    (.chatbot-header / .chatbot-messages / .chatbot-chips / .chatbot-input) are
    styled further down and reused as-is inside the modal card. */
 .yx-modal-chat {
-    width: min(400px, 100%);
-    height: min(600px, 85vh);
+    width: min(520px, 100%);      /* bigger on desktop; phones still cap at 100% */
+    height: min(680px, 85vh);     /* bigger on desktop; phones still cap at 85vh */
     padding: 0;
 }
 
@@ -324,10 +324,10 @@ body.yx-modal-lock { overflow: hidden; }
 
 .chatbot-msg {
     max-width: 82%;
-    padding: 9px 13px;
+    padding: 10px 14px;
     border-radius: 14px;
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.55;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
@@ -426,8 +426,8 @@ body.yx-modal-lock { overflow: hidden; }
     height: auto;
     border: 1px solid var(--y-border);
     border-radius: 18px;
-    padding: 8px 14px;
-    font-size: 14px;
+    padding: 9px 14px;
+    font-size: 15px;
     outline: none;
     background: var(--y-bg-msg);
     color: var(--y-text);
