@@ -1,8 +1,9 @@
 """Integration tests for the portfolio's Flask routes.
 
 These hit the app through the test client and assert on the rendered HTML —
-they cover that pages load, key content renders, the chat widget is scoped to
-Yanxi's pages, and static assets resolve. Run with: pytest
+they cover that pages load, key content renders (incl. the About / Work /
+Education / Chat tile pop-ups on the home page), the chat widget is scoped to
+the home page only, and static assets resolve. Run with: pytest
 """
 import pytest
 
@@ -50,6 +51,25 @@ def test_menu_has_three_tabs(client):
     page = html(client, "/yanxi")
     for label in ["About Me", "Hobbies", "Places"]:
         assert label in page
+
+
+def test_education_listed(client):
+    # Education content now lives in its tile pop-up (still rendered in the HTML).
+    page = html(client, "/yanxi")
+    assert "Beijing Normal" in page
+
+
+# --- home page tile pop-ups (About / Work / Education / Chat) ------------
+def test_home_has_info_modals(client):
+    page = html(client, "/yanxi")
+    for modal_id in ['id="modal-about"', 'id="modal-work"', 'id="modal-education"', 'id="modal-chat"']:
+        assert modal_id in page
+
+
+def test_chat_tile_opens_chatbot_modal(client):
+    page = html(client, "/yanxi")
+    assert 'href="#modal-chat"' in page          # the Chat tile links to the modal
+    assert 'id="yanxi-chatbot-mount"' in page    # where chatbot.js injects the chat UI
 
 
 # --- chat widget lives only on Yanxi's home page (opened from the Chat tile) ---
