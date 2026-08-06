@@ -1,0 +1,37 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run Tests
+    env:
+      TESTING: 'true'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'  # 与本地开发环境一致(3.10.6),避免老依赖(如 cryptography==37.0.2)在CI上现场编译
+
+      - name: Setup Python Virtual Environment
+        run: python -m venv venv
+
+      - name: Install Dependencies
+        run: |
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run Tests
+        run: |
+          source venv/bin/activate
+          ./run_test.sh
