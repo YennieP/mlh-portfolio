@@ -82,6 +82,13 @@ def test_chatbot_not_on_other_pages(client, path):
     assert "chatbot.js" not in html(client, path)
 
 
+# --- health check --------------------------------------------------------
+def test_health_ok(client):
+    resp = client.get("/health")
+    assert resp.status_code == 200
+    assert resp.get_json()["status"] == "ok"
+
+
 # --- static assets resolve -----------------------------------------------
 @pytest.mark.parametrize("asset", [
     "/static/js/chatbot.js",

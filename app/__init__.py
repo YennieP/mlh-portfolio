@@ -206,3 +206,16 @@ def get_time_line_post():
 @app.route('/timeline')
 def timeline():
     return render_template('timeline.html', title="Timeline", pages=yanxi_pages())
+
+@app.route('/health')
+def health():
+    """Health check that also touches the database, so a load test against this
+    endpoint exercises ALL portfolio containers: nginx (proxy/TLS) -> myportfolio
+    (Flask handles the request) -> mysql (runs a query). Used to drive load onto
+    the mysql container, which a plain homepage hit never reaches."""
+    try:
+        mydb.connect(reuse_if_open=True)
+        mydb.execute_sql("SELECT 1;")
+        return {"status": "ok", "database": "up"}, 200
+    except Exception:
+        return {"status": "error", "database": "down"}, 503
